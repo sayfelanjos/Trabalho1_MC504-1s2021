@@ -1,3 +1,9 @@
+/**
+ * Primeiro trabalho de MC504 2021s1
+ * Desenvolvimento:
+ * David Santos, Lucas Martins e Saymon Felipe
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 
