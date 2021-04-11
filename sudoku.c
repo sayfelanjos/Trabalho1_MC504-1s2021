@@ -26,6 +26,11 @@ int main() {
     display_sudoku(sudoku);
 
 }
+/** This function receive a sudoku and return 0 if
+ * in rows of table
+ * 
+ * 
+ */
 
 int verify_rows(int matrix[9][9]) {
     for (int i = 0; i < 9; i++)

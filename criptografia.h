@@ -1,5 +1,4 @@
-structure parameters_multiplicacao {
-
+struct parameters_multiplicacao {
 	int linha_inicial; // numero da primeira linha da matriz resultante da entrada que sera multiplicada pela thread
 	int linha_final; // numero da ultima linha da matriz resultante da entrada que sera multiplicada pela thread
 	int coluna_inicial; // numero da coluna da primeira coluna da matriz de criptografia que sera multiplicada pela thread
