@@ -51,4 +51,14 @@ p_vetor inseri_dado(p_vetor vetor, char dado) {
         p->next = NULL;
         vetor->size += 1;
         return vetor;
+    }
+}
+
+void destroi_vetor(p_vetor vetor) {
+    p_no p;
+    while (vetor->array_first != NULL) {
+        p = vetor->array_first;
+        vetor->array_first = p->next;
+        free(p);
+    }
 }

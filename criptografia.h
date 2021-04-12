@@ -76,3 +76,8 @@ p_vetor cria_vetor();
  * inseri um dado no vetor
  */
 p_vetor inseri_dado(p_vetor vetor, char dado);
+
+/**
+ * destroi vetor
+ */
+void destroi_vetor(p_vetor vetor);
