@@ -7,3 +7,4 @@ void* multiplicacao(void* parametros) {
             p->matriz_codigo[i][p->coluna] += p->matriz_texto[i][j] * p->criptografia[j][p->coluna];
 }
 
+// teste
