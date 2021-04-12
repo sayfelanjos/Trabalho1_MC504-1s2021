@@ -8,14 +8,16 @@ void* multiplicacao(void* parametros) {
 }
 
 int **cria_matriz(int n_linhas) {
-    int **mensagem_convertida;
+    int **matriz;
     // aloca um vetor de "linhas" ponteiros para linhas
-    mensagem_convertida = malloc (n_linhas * sizeof (int*));
+    matriz = malloc (n_linhas * sizeof (int*));
     // aloca cada uma das linhas (vetores de COL inteiros)
     for (int i=0; i < n_linhas; i++){
-        mensagem_convertida[i] = malloc (4 * sizeof (int));
+        matriz[i] = malloc (4 * sizeof (int));
+        for (int k = 0; k < 4; k++)
+            matriz[i][k] = -1;
     }
-    return mensagem_convertida;
+    return matriz;
 }
 
 void libera_memoria(int **matriz, int n_linhas) {

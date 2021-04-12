@@ -3,11 +3,7 @@
 #include <pthread.h>
 #include <criptografia.h>
 
-//constante que representa um valor vazio no final da matriz
-#define ESCAPE -1
 #define DIMENSAO_CRIPTOGRAFIA 4
-
-int erro = 0;
 
 int main() {
 	int **matriz_entrada; // matriz de numeros inteiros obtida a partir do texto de entrada;
@@ -15,6 +11,7 @@ int main() {
 	int matriz_criptografia_inv[DIMENSAO_CRIPTOGRAFIA][DIMENSAO_CRIPTOGRAFIA] = {{1,3,-4,-2},{-4,1,-3,4},{3,0,1,-3},{-2,-3,4,3}};
 	int **matriz_saida;
 	p_vetor vetor_texto = cria_vetor();
+	int erro = 0;
 	//-------------------------- Escolher se vai criptografar ou descriptografar
 	int opcao = 0;
 
@@ -42,19 +39,17 @@ int main() {
 	fclose(arquivo_entrada); // fecha o arquivo
 	//------------------------- Parte responsavel pela leitura do arquivo
 	
-
 	
 	//------------------------ Parte responsavel por obter uma matriz de inteiros a partir da matriz de texto
-	// int resto_tamanho = vetor_texto->size % 4; 
-	// if (resto_tamanho!=0) { // verifica se o numero de caracteres no texto e divisivel por 4
-	// 	for (int i=0;i<4-resto_tamanho;i++) { // se nao for divisivel por 4 completa o texto com caracteres de escape
-	// 		texto[tamanho_mensagem] = ESCAPE;
-	// 		tamanho_mensagem++;
-	// 	}
-	// }
+
 	int n_linhas = vetor_texto->size/4; // calcula o numero de colunas da matriz resultante da codificacao
+	matriz_entrada = cria_matriz(n_linhas); // inicializa a matriz de entrada;
+	matriz_saida = cria_matriz(n_linhas); // inicializa a matriz que receberá a mensagem criptografada.
 	pthread_t t_codificacao[4]; // threads responsaveis pela codificacao
+
 	parameters_transforma_texto parametros_cria_matriz[4]; // parametros para as threads
+	
+	
 	for (int i=0;i<4;i++) { // atribui valores para os parametros de cada thread
 		parametros_cria_matriz[i].matriz_resultado = *matriz_entrada;
 		parametros_cria_matriz[i].caracter_inicial = ;
