@@ -65,7 +65,7 @@ int **cria_matriz(int n_linhas);
 /**
  * recebi um array 2D e desaloca memória
  */
-void libera_memória(int **matriz);
+void destroi_matriz(int **matriz, int n_linhas);
 
 /**
  * cria array 1D

@@ -20,7 +20,7 @@ int **cria_matriz(int n_linhas) {
     return matriz;
 }
 
-void libera_memoria(int **matriz, int n_linhas) {
+void destroi_matriz(int **matriz, int n_linhas) {
 	// libera a memória da matriz
     for (int i = 0; i < n_linhas; i++)
         free (matriz[i]);
