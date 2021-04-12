@@ -7,24 +7,16 @@
 #define ESCAPE -1
 #define DIMENSAO_CRIPTOGRAFIA 4
 
-char texto[2050]; // Vetor de caracteres que armazena o texto lido.
-
-int matriz_entrada[500][DIMENSAO_CRIPTOGRAFIA]; // matriz de numeros inteiros obtida a partir do texto de entrada;
-
-int matriz_saida[500][DIMENSAO_CRIPTOGRAFIA]; // Matriz de numeros inteiros final que sera salva no arquivo de saida
-
-int matriz_criptografia[DIMENSAO_CRIPTOGRAFIA][DIMENSAO_CRIPTOGRAFIA] = {{0,3,5,1},{5,1,3,5},{3,0,1,3},{1,3,5,2}}; // matriz de criptografia
-
-int matriz_inversa[DIMENSAO_CRIPTOGRAFIA][DIMENSAO_CRIPTOGRAFIA] = {{1,3,-4,-2},{-4,1,-3,4},{3,0,1,-3},{-2,-3,4,3}};
-
 int erro = 0;
 
 int main() {
-
-
+	int **matriz_entrada; // matriz de numeros inteiros obtida a partir do texto de entrada;
+	int matriz_criptografia[DIMENSAO_CRIPTOGRAFIA][DIMENSAO_CRIPTOGRAFIA] = {{0,3,5,1},{5,1,3,5},{3,0,1,3},{1,3,5,2}}; // matriz de criptografia
+	int matriz_criptografia_inv[DIMENSAO_CRIPTOGRAFIA][DIMENSAO_CRIPTOGRAFIA] = {{1,3,-4,-2},{-4,1,-3,4},{3,0,1,-3},{-2,-3,4,3}};
+	int **matriz_saida;
 	//-------------------------- Escolher se vai criptografar ou descriptografar
 	int opcao = 0;
-	while (true) {
+	while (1) {
 		printf("Digite (1) para criptografar uma mensagem.\nDigite (2) para descriptografar uma mensagem.\n");
 		scanf("%d", &opcao);
 		if (opcao==1||opcao==2) {

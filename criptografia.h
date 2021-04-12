@@ -41,3 +41,13 @@ void* transforma_texto(void* texto);
  * realiza o maping entre numeros do codigo e letras
  */
 void* transforma_codigo(void* codigo); 
+
+/**
+ * cria um array 2D
+ */
+int **cria_matriz(int n_linhas);
+
+/**
+ * recebi um array 2D e desaloca memória
+ */
+void libera_memória(int **matriz);
