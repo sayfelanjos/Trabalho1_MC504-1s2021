@@ -2,7 +2,7 @@
 #include <stdlib.h>
 
 typedef struct {
-	int criptografia[4][4];
+	int **criptografia;
 	int **matriz_texto;
 	int num_linhas; // numero de linhas da matriz a ser criptografada.
 	int coluna; // numero da coluna que está sendo criptografada
