@@ -6,5 +6,3 @@ void* multiplicacao(void* parametros) {
         for (int j = 0; j < 4; j++)
             p->matriz_codigo[i][p->coluna] += p->matriz_texto[i][j] * p->criptografia[j][p->coluna];
 }
-
-// teste
