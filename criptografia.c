@@ -21,6 +21,32 @@ int **cria_matriz(int n_linhas) {
 void libera_memoria(int **matriz, int n_linhas) {
 	// libera a memória da matriz
     for (int i = 0; i < n_linhas; i++)
-        free (matriz[i]) ;
+        free (matriz[i]);
     free (matriz);
+}
+
+p_vetor cria_vetor() {
+    p_vetor v = malloc(sizeof(Array));
+    v->array_first = NULL;
+    v->array_last = NULL;
+    v->size = 0;
+    return v;
+}
+
+p_vetor inseri_dado(p_vetor vetor, char dado) {
+    p_no p = malloc(sizeof(No));
+    if (vetor->size == 0) {
+        vetor->array_first = p;
+        vetor->array_last = p;
+        vetor->size += 1;
+        p->c = dado;
+        p->next = NULL;
+        return vetor;
+    } else {
+        vetor->array_last->next = p;
+        vetor->array_last = p;
+        p->c = dado;
+        p->next = NULL;
+        vetor->size += 1;
+        return vetor;
 }

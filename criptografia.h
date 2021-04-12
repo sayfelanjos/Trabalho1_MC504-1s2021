@@ -1,6 +1,21 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+typedef struct No {
+	char c;
+	struct No *next;
+} No;
+
+typedef struct No *p_no;
+
+typedef struct Array {
+	p_no array_first;
+	p_no array_last;
+	int size;
+} Array;
+
+typedef struct Array *p_vetor;
+
 typedef struct {
 	int **criptografia;
 	int **matriz_texto;
@@ -51,3 +66,13 @@ int **cria_matriz(int n_linhas);
  * recebi um array 2D e desaloca memória
  */
 void libera_memória(int **matriz);
+
+/**
+ * cria array 1D
+ */
+p_vetor cria_vetor();
+
+/**
+ * inseri um dado no vetor
+ */
+p_vetor inseri_dado(p_vetor vetor, char dado);

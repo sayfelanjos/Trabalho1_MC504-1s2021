@@ -14,8 +14,10 @@ int main() {
 	int matriz_criptografia[DIMENSAO_CRIPTOGRAFIA][DIMENSAO_CRIPTOGRAFIA] = {{0,3,5,1},{5,1,3,5},{3,0,1,3},{1,3,5,2}}; // matriz de criptografia
 	int matriz_criptografia_inv[DIMENSAO_CRIPTOGRAFIA][DIMENSAO_CRIPTOGRAFIA] = {{1,3,-4,-2},{-4,1,-3,4},{3,0,1,-3},{-2,-3,4,3}};
 	int **matriz_saida;
+	p_vetor vetor_texto = cria_vetor();
 	//-------------------------- Escolher se vai criptografar ou descriptografar
 	int opcao = 0;
+
 	while (1) {
 		printf("Digite (1) para criptografar uma mensagem.\nDigite (2) para descriptografar uma mensagem.\n");
 		scanf("%d", &opcao);
@@ -25,18 +27,16 @@ int main() {
 	}
 	//------------------------- Escolher se vai criptografar ou descriptografar
 
-
 	if (opcao==1) { // Se o usuario quiser criptografar
-
 
 	//-------------------------- Parte responsavel pela leitura do arquivo
 	FILE* arquivo_entrada; // ponteiro para o arquivo que contem a mensagem que sera criptografada
 	char c; // caractere de entrada
-	int tamanho_mensagem = 0; // indice do vetor em que sera armazenado o caractere atual
+	// int tamanho_mensagem = 0; // indice do vetor em que sera armazenado o caractere atual
 	if ((arquivo_entrada=fopen("mensagem.txt","r"))!=NULL) { // tentativa de abrir o arquivo
 		while((c=fgetc(arquivo_entrada))!=EOF) { // le o arquivo caractere por caractere ate encontrar o final
-			texto[tamanho_mensagem] = c; // armazena o caractere atual no vetor de caracteres
-			tamanho_mensagem++; // incrementa o indice do proximo caractere que sera armazenado
+			inseri_dado(vetor_texto, c); // armazena o caractere atual no vetor de caracteres
+			// tamanho_mensagem++; // incrementa o indice do proximo caractere que sera armazenado
 		}
 	}
 	fclose(arquivo_entrada); // fecha o arquivo
@@ -45,14 +45,14 @@ int main() {
 
 	
 	//------------------------ Parte responsavel por obter uma matriz de inteiros a partir da matriz de texto
-	int resto_tamanho = tamanho_mensagem % 4; 
-	if (resto_tamanho!=0) { // verifica se o numero de caracteres no texto e divisivel por 4
-		for (int i=0;i<4-resto_tamanho;i++) { // se nao for divisivel por 4 completa o texto com caracteres de escape
-			texto[tamanho_mensagem] = ESCAPE;
-			tamanho_mensagem++;
-		}
-	}
-	int n_linhas = tamanho_mensagem/4; // calcula o numero de colunas da matriz resultante da codificacao
+	// int resto_tamanho = vetor_texto->size % 4; 
+	// if (resto_tamanho!=0) { // verifica se o numero de caracteres no texto e divisivel por 4
+	// 	for (int i=0;i<4-resto_tamanho;i++) { // se nao for divisivel por 4 completa o texto com caracteres de escape
+	// 		texto[tamanho_mensagem] = ESCAPE;
+	// 		tamanho_mensagem++;
+	// 	}
+	// }
+	int n_linhas = vetor_texto->size/4; // calcula o numero de colunas da matriz resultante da codificacao
 	pthread_t t_codificacao[4]; // threads responsaveis pela codificacao
 	parameters_transforma_texto parametros_cria_matriz[4]; // parametros para as threads
 	for (int i=0;i<4;i++) { // atribui valores para os parametros de cada thread
