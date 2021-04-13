@@ -62,3 +62,26 @@ void destroi_vetor(p_vetor vetor) {
         free(p);
     }
 }
+
+// funcao que transforma a mensagem de entrada em uma matriz numerica; realiza o maping entre as letras da mensagem e numeros
+void* transforma_texto(void* texto){
+    parameters_transforma_texto *p = (parameters_transforma_texto *) texto;
+    p_no s = p->mensagem->array_first;
+    for (int i = 0; i < p->caracter_inicial; i++) {
+        s = s->next;
+    }
+    for (int k = p->caracter_inicial; k <= p->caracter_final; k++){        
+        p->matriz_resultado[k/4][k%4] = (int) s->c;   
+        s = s->next;
+    } 
+}
+
+// funcao que transforma o codigo criptografado de volta em texto; realiza o maping entre numeros do codigo e letras
+// void* transforma_codigo(void* codigo){
+//     parameters_transforma_texto *p = (parameters_transforma_texto *) codigo;
+//     for (int i= p->linha_inicial; i < p->linha_final; i++){
+//         for (int j = p->coluna_inicial; j < p->coluna_final; j++){
+//             p->texto[4*i+j] = (char) p->matriz_resultado[i][j]);   
+//         }
+//     }   
+// }

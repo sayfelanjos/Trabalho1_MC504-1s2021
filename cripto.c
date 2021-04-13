@@ -39,14 +39,14 @@ void* transforma_texto(void* texto){
 }
 
 // funcao que transforma o codigo criptografado de volta em texto; realiza o maping entre numeros do codigo e letras
-void* transforma_codigo(void* codigo){
-    parameters_transforma_texto *p = (parameters_transforma_texto *) codigo;
-    for (int i= p->linha_inicial; i < p->linha_final; i++){
-        for (int j = p->coluna_inicial; j < p->coluna_final; j++){
-            p->texto[4*i+j] = (char) p->matriz_resultado[i][j]);   
-        }
-    }   
-}
+// void* transforma_codigo(void* codigo){
+//     parameters_transforma_texto *p = (parameters_transforma_texto *) codigo;
+//     for (int i= p->linha_inicial; i < p->linha_final; i++){
+//         for (int j = p->coluna_inicial; j < p->coluna_final; j++){
+//             p->texto[4*i+j] = (char) p->matriz_resultado[i][j]);   
+//         }
+//     }   
+// }
     
 
 int main(){

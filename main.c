@@ -3,12 +3,12 @@
 #include <pthread.h>
 #include <criptografia.h>
 
-#define DIMENSAO_CRIPTOGRAFIA 4
+
 
 int main() {
 	int **matriz_entrada; // matriz de numeros inteiros obtida a partir do texto de entrada;
-	int matriz_criptografia[DIMENSAO_CRIPTOGRAFIA][DIMENSAO_CRIPTOGRAFIA] = {{0,3,5,1},{5,1,3,5},{3,0,1,3},{1,3,5,2}}; // matriz de criptografia
-	int matriz_criptografia_inv[DIMENSAO_CRIPTOGRAFIA][DIMENSAO_CRIPTOGRAFIA] = {{1,3,-4,-2},{-4,1,-3,4},{3,0,1,-3},{-2,-3,4,3}};
+	int matriz_criptografia[4][4] = {{0,3,5,1},{5,1,3,5},{3,0,1,3},{1,3,5,2}}; // matriz de criptografia
+	int matriz_criptografia_inv[4][4] = {{1,3,-4,-2},{-4,1,-3,4},{3,0,1,-3},{-2,-3,4,3}};
 	int **matriz_saida;
 	p_vetor vetor_texto = cria_vetor();
 	int erro = 0;
@@ -51,9 +51,10 @@ int main() {
 	
 	
 	for (int i=0;i<4;i++) { // atribui valores para os parametros de cada thread
-		parametros_cria_matriz[i].matriz_resultado = *matriz_entrada;
-		parametros_cria_matriz[i].caracter_inicial = ;
-		parametros_cria_matriz[i].caracter_final = ;
+		parametros_cria_matriz[i].mensagem = vetor_texto;
+		parametros_cria_matriz[i].matriz_resultado = matriz_entrada;
+		parametros_cria_matriz[i].caracter_inicial = i*vetor_texto->size/4;
+		parametros_cria_matriz[i].caracter_final = (i+1)*vetor_texto->size/4;
 	}
 	for (int i=0;i<4;i++) { // cria as threads responsaveis pela codificacao
 		if (!erro) {
@@ -80,7 +81,7 @@ int main() {
 	pthread_t t_multiplicacao[4]; // threads responsaveis pela multiplicacao
 	Parameters_multiplicacao parametros_multiplicacao[4]; // parametros para as threads responsaveis pela multiplicacao
 	for (int i=0;i<4;i++) { // atribui valores para os parametros de cada thread
-		parametros_multiplicacao[i].criptografia = matriz_criptografia;
+		parametros_multiplicacao[i].criptografia = &matriz_criptografia;
 		parametros_multiplicacao[i].matriz_texto = matriz_entrada;
 		parametros_multiplicacao[i].num_linhas = n_linhas;
 		parametros_multiplicacao[i].coluna = i;
@@ -145,7 +146,7 @@ int main() {
 		pthread_t t_multiplicacao[4]; // threads responsaveis pela multiplicacao
 		Parameters_multiplicacao parametros_multiplicacao[4]; // parametros para as threads que realizam a multiplicacao
 	        for (int i=0;i<4;i++) { // atribui valores para os parametros de cada threads
-        	        parametros_multiplicacao[i].criptografia = matriz_inversa;
+        	        parametros_multiplicacao[i].criptografia = &matriz_criptografia_inv;
                		parametros_multiplicacao[i].matriz_texto = matriz_entrada;
                 	parametros_multiplicacao[i].num_linhas = n_linhas-1;
                 	parametros_multiplicacao[i].coluna = i;
@@ -172,43 +173,44 @@ int main() {
 		//------------------------Parte responsavel por realizar a multiplicacao de matrizes
 		
 
-		//------------------------ Parte responsavel por obter uma vetor de caracteres a partir da matriz de inteiros
-		pthread_t t_codificacao[4]; // threads responsaveis por transformar a matriz codigo em um vetor de caracteres
-        	parameters_transforma_codigo parametros_cria_vetor[4]; // parametros para as threads responsaveis por realizar a transformacao
-        	for (int i=0;i<4;i++) { // atribui valores para os parametros de cada thread
-        	        parametros_cria_vetor[i].matriz_resultado = *matriz_entrada;
-        	        parametros_cria_vetor[i].caracter_inicial = ;
-        	        parametros_cria_vetor[i].caracter_final = ;
-			parametros_cria_vetor[i].
-        	}
-        	for (int i=0;i<4;i++) { // cria as threads responsaveis por realizar a transformacao
-			if (!erro) {
-        	        	erro = pthread_create(&t_codificacao[i],NULL,transforma_codigo,&parametros_cria_vetor[i]);
-			}
-			else {
-				printf("Erro ocorrido na criacao de threads.\n");
-				return 1;
-			}
-        	}
-        	for (int i=0;i<4;i++) { // espera as threads responsaveis por realizar a transformacao terminarem sua tarefa
-			if (!erro) {
-        	        	erro = pthread_join(&t_codificacao[i],NULL);
-			}
-			else {
-				printf("Erro ocorrido na tentativa de juntar threads.\n");
-				return 1;
-			}
-        	}
-		//------------------------ Parte responsavel por obter um vetor de caracteres a partir da matriz de inteiros
+		// //------------------------ Parte responsavel por obter uma vetor de caracteres a partir da matriz de inteiros
+		// pthread_t t_codificacao[4]; // threads responsaveis por transformar a matriz codigo em um vetor de caracteres
+        // 	parameters_transforma_codigo parametros_cria_vetor[4]; // parametros para as threads responsaveis por realizar a transformacao
+        // 	for (int i=0;i<4;i++) { // atribui valores para os parametros de cada thread
+        // 	        parametros_cria_vetor[i].matriz_resultado = *matriz_entrada;
+        // 	        parametros_cria_vetor[i].caracter_inicial = ;
+        // 	        parametros_cria_vetor[i].caracter_final = ;
+		// 	parametros_cria_vetor[i].
+        // 	}
+        // 	for (int i=0;i<4;i++) { // cria as threads responsaveis por realizar a transformacao
+		// 	if (!erro) {
+        // 	        	erro = pthread_create(&t_codificacao[i],NULL,transforma_codigo,&parametros_cria_vetor[i]);
+		// 	}
+		// 	else {
+		// 		printf("Erro ocorrido na criacao de threads.\n");
+		// 		return 1;
+		// 	}
+        // 	}
+        // 	for (int i=0;i<4;i++) { // espera as threads responsaveis por realizar a transformacao terminarem sua tarefa
+		// 	if (!erro) {
+        // 	        	erro = pthread_join(&t_codificacao[i],NULL);
+		// 	}
+		// 	else {
+		// 		printf("Erro ocorrido na tentativa de juntar threads.\n");
+		// 		return 1;
+		// 	}
+        // 	}
+		// //------------------------ Parte responsavel por obter um vetor de caracteres a partir da matriz de inteiros
 
 
 		//------------------------Parte responsavel por salvar a saida em um documento de texto
 		FILE* arquivo_saida; // ponteiro para o arquivo que armazena o texto descriptografado
         	if ((arquivo_saida=fopen("texto.txt","w"))!=NULL) {
-                	while(texto[atual]!='\0') {
-                        	fprintf(arquivo_saida,"%c", texto[atual]);
-				atual++;
-                       	}
+                	for (int i = 0; i < n_linhas; i++)
+                        for (int j = 0; j < 4; j++)
+							if (matriz_saida[i][j] != -1)
+								fprintf(arquivo_saida,"%c", (char) matriz_saida[i][j]);
+
         	}
         	fclose(arquivo_saida);
         //-----------------------Parte responsavel por salvar a saida em um documento de texto
