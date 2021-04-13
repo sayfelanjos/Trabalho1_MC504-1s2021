@@ -160,7 +160,6 @@ int main() {
 		int coluna = 0; // coluna da matriz em que sera armazenado o inteiro atual
 		if ((arquivo_entrada=fopen("codigo.txt","r"))!=NULL) {
 			while((fscanf(arquivo_entrada,"%d",&entrada))!=EOF) {
-				matriz_entrada[n_linhas][coluna] = entrada;
 				coluna++;
 				if (coluna == 4) {
 					coluna = 0;
@@ -168,6 +167,18 @@ int main() {
 				}
 			}
 		}
+		fclose(arquivo_entrada);
+		matriz_entrada = cria_matriz(n_linhas); // inicializa a matriz de entrada;
+		matriz_saida = cria_matriz(n_linhas); // inicializa a matriz que receberá a mensagem criptografada.		
+		
+		if ((arquivo_entrada=fopen("codigo.txt","r"))!=NULL) {
+			for(int i = 0; i < n_linhas; i++) {
+				for(int j = 0; j < 4; j++){
+					matriz_entrada[i][j] = entrada;
+				}
+			}
+		}
+		fclose(arquivo_entrada);
 		//-------------------------- Parte responsavel pela leitura do arquivo
 
 
