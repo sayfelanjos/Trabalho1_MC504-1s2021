@@ -72,6 +72,9 @@ int main() {
 	//------------------------ Parte responsavel por obter uma matriz de inteiros a partir da matriz de texto
 
 	int n_linhas = vetor_texto->size/4; // calcula o numero de colunas da matriz resultante da codificacao
+	if (n_linhas%4!=0) {
+		n_linhas++;
+	}
 	matriz_entrada = cria_matriz(n_linhas); // inicializa a matriz de entrada;
 	matriz_saida = cria_matriz(n_linhas); // inicializa a matriz que receberá a mensagem criptografada.
 	pthread_t t_codificacao[4]; // threads responsaveis pela codificacao
@@ -157,17 +160,13 @@ int main() {
 		FILE* arquivo_entrada; // ponteiro para o arquivo que contem a mensagem criptografada
 		int entrada; //inteiro que armazena o valor lido na entrada
 		int n_linhas = 0; // linha da matriz em que sera armazenada o inteiro atual
-		int coluna = 0; // coluna da matriz em que sera armazenado o inteiro atual
 		if ((arquivo_entrada=fopen("codigo.txt","r"))!=NULL) {
 			while((fscanf(arquivo_entrada,"%d",&entrada))!=EOF) {
-				coluna++;
-				if (coluna == 4) {
-					coluna = 0;
-					n_linhas++;
-				}
+				n_linhas++;
 			}
 		}
 		fclose(arquivo_entrada);
+		n_linhas/= 4;
 		matriz_entrada = cria_matriz(n_linhas); // inicializa a matriz de entrada;
 		matriz_saida = cria_matriz(n_linhas); // inicializa a matriz que receberá a mensagem criptografada.		
 		
@@ -188,7 +187,7 @@ int main() {
 	        for (int i=0;i<4;i++) { // atribui valores para os parametros de cada threads
         	        parametros_multiplicacao[i].criptografia = matriz_criptografia_inv;
                		parametros_multiplicacao[i].matriz_texto = matriz_entrada;
-                	parametros_multiplicacao[i].num_linhas = n_linhas-1;
+                	parametros_multiplicacao[i].num_linhas = n_linhas;
                 	parametros_multiplicacao[i].coluna = i;
                 	parametros_multiplicacao[i].matriz_codigo = matriz_saida;
         	}
