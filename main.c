@@ -65,15 +65,8 @@ int main(void) {
 	if ((arquivo_entrada=fopen("mensagem.txt","r"))!=NULL) {
 		while((c=fgetc(arquivo_entrada))!=EOF) { // le o arquivo caractere por caractere ate encontrar o final
 			inseri_dado(vetor_texto, c); // armazena o caractere atual no vetor de caracteres
-
-		//-------------------------- Parte responsavel pela leitura do arquivo
-		FILE* arquivo_entrada; // mensagem que sera criptografada
-		char c; // caractere de entrada
-		if ((arquivo_entrada=fopen("mensagem.txt","r"))!=NULL) {
-			while((c=fgetc(arquivo_entrada))!=EOF) { // le o arquivo caractere por caractere ate encontrar o final
-				inseri_dado(vetor_texto, c); // armazena o caractere atual no vetor de caracteres
-			}
 		}
+	}
 		fclose(arquivo_entrada); // fecha o arquivo
 		//------------------------- Parte responsavel pela leitura do arquivo
 
@@ -160,15 +153,11 @@ int main(void) {
 				fprintf(arquivo_saida,"\n");
 			}
 		}
-<<<<<<< HEAD
-	}
-	fclose(arquivo_saida);
+		fclose(arquivo_saida);
 	//-----------------------Parte responsavel por salvar a saida em um documento de texto
 	
 	printf("A mensagem criptografada se encontra no arquivo codigo.txt .\n");
 
-		fclose(arquivo_saida);
-		//-----------------------Parte responsavel por salvar a saida em um documento de texto
 	} // fim da parte responsavel por criptografar
 
 
