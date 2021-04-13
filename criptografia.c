@@ -61,6 +61,7 @@ void destroi_vetor(p_vetor vetor) {
         vetor->array_first = p->next;
         free(p);
     }
+    free(vetor);
 }
 
 // funcao que transforma a mensagem de entrada em uma matriz numerica; realiza o maping entre as letras da mensagem e numeros

@@ -3,21 +3,19 @@
 #include <pthread.h>
 #include "criptografia.h"
 
+int n_linhas;
 
-
-int main() {
+int main(void) {
 	int **matriz_entrada; // matriz que armazena a entrada da operacao de multiplicacao
 	int **matriz_criptografia; // matriz de criptografia
 	int **matriz_criptografia_inv; // matriz inversa
 	int **matriz_saida; //matriz que armazena o resultado da operacao de multiplicacao
 	p_vetor vetor_texto = cria_vetor(); // lista ligada que armazena o texto que sera criptografado
 	int erro = 0;
-
-
+	
 	//-------------------------- Aloca memoria e realiza a leitura das matrizes de criptografia 
 
 	FILE* arquivo_matriz; 
-        int matriz_ent; 
 	matriz_criptografia = (int**) malloc(4*sizeof(int*));
 	matriz_criptografia_inv = (int**) malloc(4*sizeof(int*));
 	for (int i=0;i<4;i++) {
@@ -74,7 +72,7 @@ int main() {
 	
 	//------------------------ Parte responsavel por obter uma matriz de inteiros a partir da matriz de texto
 
-	int n_linhas = vetor_texto->size/4; // calcula o numero de linhas da matriz resultante da codificacao
+	n_linhas = vetor_texto->size/4; // calcula o numero de linhas da matriz resultante da codificacao
 	if (vetor_texto->size%4!=0) {
 		n_linhas++;
 	} // adiciona uma linha caso o tamanho do texto nao seja divisel por 4
@@ -229,6 +227,9 @@ int main() {
 
 	}// fim da parte responsavel por descriptografar
 
+	destroi_vetor(vetor_texto);
+	destroi_matriz(matriz_saida, n_linhas); // libera a memoria alocada para a matriz original
+	destroi_matriz(matriz_entrada, 	n_linhas); // libera a memoria alocada para a matriz original
 	destroi_matriz(matriz_criptografia,4); // libera a memoria alocada para a matriz original
 	destroi_matriz(matriz_criptografia_inv,4); // libera a memoria alocada para a matriz inversa
 	return 0;
