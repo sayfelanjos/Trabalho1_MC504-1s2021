@@ -2,9 +2,11 @@
 
 void* multiplicacao(void* parametros) {
     Parameters_multiplicacao *p = (Parameters_multiplicacao *) parametros;
+    printf("Thread Multiplicacao %d iniciou.\n", p->coluna);
     for (int i = 0; i < p->num_linhas; i++)
         for (int j = 0; j < 4; j++)
             p->matriz_codigo[i][p->coluna] += p->matriz_texto[i][j] * p->criptografia[j][p->coluna];
+    printf("Thread Multiplicacao %d terminou.\n",p->coluna);
 }
 
 int **cria_matriz(int n_linhas) {

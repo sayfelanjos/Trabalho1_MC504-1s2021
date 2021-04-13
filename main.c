@@ -59,6 +59,8 @@ int main() {
 
 	if (opcao==1) { // Se o usuario quiser criptografar
 
+	printf("Mensagem sendo criptografada. \n");
+
 	//-------------------------- Parte responsavel pela leitura do arquivo
 	FILE* arquivo_entrada; // mensagem que sera criptografada
 	char c; // caractere de entrada
@@ -155,10 +157,15 @@ int main() {
 	}
 	fclose(arquivo_saida);
 	//-----------------------Parte responsavel por salvar a saida em um documento de texto
+	
+	printf("A mensagem criptografada se encontra no arquivo codigo.txt .\n");
+
 	} // fim da parte responsavel por criptografar
 
 
 	else if (opcao==2) { //Se o usuario quiser descriptografar
+
+		printf ("Mensagem sendo descriptografada. \n");
 		//-------------------------- Parte responsavel pela leitura do arquivo
 		FILE* arquivo_entrada; // ponteiro para o arquivo que contem a mensagem criptografada
 		int n_linhas = 0; // linha da matriz em que sera armazenada o inteiro atual
@@ -227,6 +234,8 @@ int main() {
         	fclose(arquivo_saida);
         //-----------------------Parte responsavel por salvar a saida em um documento de texto
 
+	printf("A mensagem descriptografada se encontra no arquivo texto.txt .\n");
+		
 	}// fim da parte responsavel por descriptografar
 
 	destroi_matriz(matriz_criptografia,4); // libera a memoria alocada para a matriz original
