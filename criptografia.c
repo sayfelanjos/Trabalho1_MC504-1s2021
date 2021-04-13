@@ -64,7 +64,6 @@ void destroi_vetor(p_vetor vetor) {
     free(vetor);
 }
 
-// funcao que transforma a mensagem de entrada em uma matriz numerica; realiza o maping entre as letras da mensagem e numeros
 void* transforma_texto(void* texto){
     parameters_transforma_texto *p = (parameters_transforma_texto *) texto;
     p_no s = p->mensagem->array_first;
