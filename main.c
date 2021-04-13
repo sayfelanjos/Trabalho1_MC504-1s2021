@@ -7,12 +7,41 @@
 
 int main() {
 	int **matriz_entrada; // matriz de numeros inteiros obtida a partir do texto de entrada;
-	int matriz_criptografia[4][4] = {{0,3,5,1},{5,1,3,5},{3,0,1,3},{1,3,5,2}}; // matriz de criptografia
-	int matriz_criptografia_inv[4][4] = {{1,3,-4,-2},{-4,1,-3,4},{3,0,1,-3},{-2,-3,4,3}};
+	int **matriz_criptografia; // matriz de criptografia
+	int **matriz_criptografia_inv;
 	int **matriz_saida;
 	p_vetor vetor_texto = cria_vetor();
 	int erro = 0;
 	//-------------------------- Escolher se vai criptografar ou descriptografar
+	
+	FILE* arquivo_matriz; 
+        int matriz_ent; 
+	matriz_criptografia = (int**) malloc(4*sizeof(int*));
+	matriz_criptografia_inv = (int**) malloc(4*sizeof(int*));
+	for (int i=0;i<4;i++) {
+		matriz_criptografia[i] = (int*) malloc(4*sizeof(int));
+		matriz_criptografia_inv[i] = (int*) malloc(4*sizeof(int));
+	}
+        if ((arquivo_matriz=fopen("matriz.txt","r"))!=NULL) {
+		for (int i=0;i<4;i++) {
+			for (int j=0;j<4;j++) {
+                		fscanf(arquivo_matriz,"%d",&matriz_ent);
+                        	matriz_criptografia[i][j] = matriz_ent;
+                	}
+		}
+        }
+	fclose(arquivo_matriz);
+
+	if ((arquivo_matriz=fopen("matriz_inversa.txt","r"))!=NULL) {
+                for (int i=0;i<4;i++) {
+                        for (int j=0;j<4;j++) {
+                                fscanf(arquivo_matriz,"%d",&matriz_ent);
+                                matriz_criptografia_inv[i][j] = matriz_ent;
+                        }
+                }
+        }
+        fclose(arquivo_matriz);
+	
 	int opcao = 0;
 
 	while (1) {
@@ -81,7 +110,7 @@ int main() {
 	pthread_t t_multiplicacao[4]; // threads responsaveis pela multiplicacao
 	Parameters_multiplicacao parametros_multiplicacao[4]; // parametros para as threads responsaveis pela multiplicacao
 	for (int i=0;i<4;i++) { // atribui valores para os parametros de cada thread
-		parametros_multiplicacao[i].criptografia = &matriz_criptografia;
+		parametros_multiplicacao[i].criptografia = matriz_criptografia;
 		parametros_multiplicacao[i].matriz_texto = matriz_entrada;
 		parametros_multiplicacao[i].num_linhas = n_linhas;
 		parametros_multiplicacao[i].coluna = i;
@@ -146,7 +175,7 @@ int main() {
 		pthread_t t_multiplicacao[4]; // threads responsaveis pela multiplicacao
 		Parameters_multiplicacao parametros_multiplicacao[4]; // parametros para as threads que realizam a multiplicacao
 	        for (int i=0;i<4;i++) { // atribui valores para os parametros de cada threads
-        	        parametros_multiplicacao[i].criptografia = &matriz_criptografia_inv;
+        	        parametros_multiplicacao[i].criptografia = matriz_criptografia_inv;
                		parametros_multiplicacao[i].matriz_texto = matriz_entrada;
                 	parametros_multiplicacao[i].num_linhas = n_linhas-1;
                 	parametros_multiplicacao[i].coluna = i;
@@ -216,5 +245,7 @@ int main() {
         //-----------------------Parte responsavel por salvar a saida em um documento de texto
 
 	}// fim da parte responsavel por descriptografar
+	destroi_matriz(matriz_criptografia,4);
+	destroi_matriz(matriz_criptografia_inv,4);
 	return 0;
 } // Fim do codigo

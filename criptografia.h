@@ -17,7 +17,7 @@ typedef struct Array {
 typedef struct Array *p_vetor;
 
 typedef struct {
-	int criptografia;
+	int **criptografia;
 	int **matriz_texto;
 	int num_linhas; // numero de linhas da matriz a ser criptografada.
 	int coluna; // numero da coluna que está sendo criptografada
