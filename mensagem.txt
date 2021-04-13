@@ -1,1 +1,32 @@
-There used to be a graying tower alone on the sea you became the light on the dark side of me. Love remained the drug thats the high not the pill. But did you know that when it snows our eyes became larger the light that you shine can be seen.
+Managing Local Updates
+In Chapter 12, I describe how the pull command fetches updates from the remote
+repository into the local repository and then attempts a merge. If the merge is
+successful, the working directory is updated as well as the local repository. In some
+cases, such as the one I previously described, automatically merging updates into the
+working directory may not always be what you want.
+Suppose that you are implementing a new feature that involves changing files A, B,
+and C. You haven’t completed your changes to A, B, and C when you learn that a key
+security fix has been made in the original code base that you need to incorporate in
+short order. So, you do a pull from the updated code base. The pull brings down the
+security fix and merges the changed files into the contents of your working directory.
+As it turns out, the security fix also involved changes to files A, B, and C. The merge
+changed the versions of A, B, and C that you were working on in a way that breaks
+your new feature significantly. You’re now faced with trying to untangle what the
+automatic merge did after the fact to get back to a working state.
+A better approach is to have control over the merge before it occurs. Using my
+example, that approach would look like this:
+1. Save off your changes that are in progress in A, B, and C before you do the pull.
+You do this using the git stash command that I cover in Chapter 11. Now you’ve
+stashed your changes that are in progress, effectively resetting your working
+directory and staging area back to the way they were at the last commit.
+2. Do the pull operation to get the updates with the security fix into your local
+environment.
+3. When you are ready, pop or apply your work from the stash. When you try to do
+this and there are differences between the stashed contents and the working
+directory contents, Git stops and informs you about the differences.
+4. Make the necessary changes in your working directory, or even create another
+branch to do the changes in.
+So, one model of incorporating updates from others while you have work in progress
+is to stash your changes, do a pull, and then apply or pop the changes from the stash.
+At that point, Git lets you know if there are merge conflicts, and you can resolve them
+manually instead of trying to unravel what the pull may have changed automatically.
