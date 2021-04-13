@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <pthread.h>
-#include <criptografia.h>
+#include "criptografia.h"
 
 
 
@@ -96,7 +96,7 @@ int main() {
 	}
 	for (int i=0;i<4;i++) { // espera as threads responsaveis pela codificacao terminarem a tarefa
 		if (!erro) {
-			erro = pthread_join(&t_codificacao[i],NULL);
+			erro = pthread_join(t_codificacao[i],NULL);
 		}
 		else {
 			printf("Erro ocorrido na tentativa de juntar threads.\n");
@@ -127,7 +127,7 @@ int main() {
 	}
 	for (int i=0;i<4;i++) { // espera as threads responsaveis pela multiplicacao terminarem a tarefa
 		if (!erro) {
-			erro = pthread_join(&t_multiplicacao[i],NULL);
+			erro = pthread_join(t_multiplicacao[i],NULL);
 		}
 		else {
 			printf("Erro ocorrido na tentiva de juntar threads");
@@ -192,7 +192,7 @@ int main() {
         	}
         	for (int i=0;i<4;i++) { // espera as threads responsaveis pela multiplicacao terminarem a tarefa
 			if (!erro) {
-        	        	erro = pthread_join(&t_multiplicacao[i],NULL);
+        	        	erro = pthread_join(t_multiplicacao[i],NULL);
 			}
 			else {
 				printf("Erro ocorrido na tentativa de juntar threads");
@@ -204,32 +204,6 @@ int main() {
 
 		// //------------------------ Parte responsavel por obter uma vetor de caracteres a partir da matriz de inteiros
 		// pthread_t t_codificacao[4]; // threads responsaveis por transformar a matriz codigo em um vetor de caracteres
-        // 	parameters_transforma_codigo parametros_cria_vetor[4]; // parametros para as threads responsaveis por realizar a transformacao
-        // 	for (int i=0;i<4;i++) { // atribui valores para os parametros de cada thread
-        // 	        parametros_cria_vetor[i].matriz_resultado = *matriz_entrada;
-        // 	        parametros_cria_vetor[i].caracter_inicial = ;
-        // 	        parametros_cria_vetor[i].caracter_final = ;
-		// 	parametros_cria_vetor[i].
-        // 	}
-        // 	for (int i=0;i<4;i++) { // cria as threads responsaveis por realizar a transformacao
-		// 	if (!erro) {
-        // 	        	erro = pthread_create(&t_codificacao[i],NULL,transforma_codigo,&parametros_cria_vetor[i]);
-		// 	}
-		// 	else {
-		// 		printf("Erro ocorrido na criacao de threads.\n");
-		// 		return 1;
-		// 	}
-        // 	}
-        // 	for (int i=0;i<4;i++) { // espera as threads responsaveis por realizar a transformacao terminarem sua tarefa
-		// 	if (!erro) {
-        // 	        	erro = pthread_join(&t_codificacao[i],NULL);
-		// 	}
-		// 	else {
-		// 		printf("Erro ocorrido na tentativa de juntar threads.\n");
-		// 		return 1;
-		// 	}
-        // 	}
-		// //------------------------ Parte responsavel por obter um vetor de caracteres a partir da matriz de inteiros
 
 
 		//------------------------Parte responsavel por salvar a saida em um documento de texto
