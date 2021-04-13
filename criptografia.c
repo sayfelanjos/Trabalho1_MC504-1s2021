@@ -70,7 +70,7 @@ void* transforma_texto(void* texto){
     for (int i = 0; i < p->caracter_inicial; i++) {
         s = s->next;
     }
-    for (int k = p->caracter_inicial; k <= p->caracter_final; k++){        
+    for (int k = p->caracter_inicial; k < p->caracter_final; k++){        
         p->matriz_resultado[k/4][k%4] = (int) s->c;   
         s = s->next;
     } 
