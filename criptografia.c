@@ -15,7 +15,7 @@ int **cria_matriz(int n_linhas) {
     for (int i=0; i < n_linhas; i++){
         matriz[i] = malloc (4 * sizeof (int));
         for (int k = 0; k < 4; k++)
-            matriz[i][k] = -1;
+            matriz[i][k] = 0;
     }
     return matriz;
 }
@@ -70,18 +70,8 @@ void* transforma_texto(void* texto){
     for (int i = 0; i < p->caracter_inicial; i++) {
         s = s->next;
     }
-    for (int k = p->caracter_inicial; k <= p->caracter_final; k++){        
+    for (int k = p->caracter_inicial; k < p->caracter_final; k++){        
         p->matriz_resultado[k/4][k%4] = (int) s->c;   
         s = s->next;
     } 
 }
-
-// funcao que transforma o codigo criptografado de volta em texto; realiza o maping entre numeros do codigo e letras
-// void* transforma_codigo(void* codigo){
-//     parameters_transforma_texto *p = (parameters_transforma_texto *) codigo;
-//     for (int i= p->linha_inicial; i < p->linha_final; i++){
-//         for (int j = p->coluna_inicial; j < p->coluna_final; j++){
-//             p->texto[4*i+j] = (char) p->matriz_resultado[i][j]);   
-//         }
-//     }   
-// }

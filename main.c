@@ -6,14 +6,16 @@
 
 
 int main() {
-	int **matriz_entrada; // matriz de numeros inteiros obtida a partir do texto de entrada;
+	int **matriz_entrada; // matriz que armazena a entrada da operacao de multiplicacao
 	int **matriz_criptografia; // matriz de criptografia
-	int **matriz_criptografia_inv;
-	int **matriz_saida;
-	p_vetor vetor_texto = cria_vetor();
+	int **matriz_criptografia_inv; // matriz inversa
+	int **matriz_saida; //matriz que armazena o resultado da operacao de multiplicacao
+	p_vetor vetor_texto = cria_vetor(); // lista ligada que armazena o texto que sera criptografado
 	int erro = 0;
-	//-------------------------- Escolher se vai criptografar ou descriptografar
-	
+
+
+	//-------------------------- Aloca memoria e realiza a leitura das matrizes de criptografia 
+
 	FILE* arquivo_matriz; 
         int matriz_ent; 
 	matriz_criptografia = (int**) malloc(4*sizeof(int*));
@@ -25,8 +27,7 @@ int main() {
         if ((arquivo_matriz=fopen("matriz.txt","r"))!=NULL) {
 		for (int i=0;i<4;i++) {
 			for (int j=0;j<4;j++) {
-                		fscanf(arquivo_matriz,"%d",&matriz_ent);
-                        	matriz_criptografia[i][j] = matriz_ent;
+                		fscanf(arquivo_matriz,"%d",&matriz_criptografia[i][j]);
                 	}
 		}
         }
@@ -35,13 +36,16 @@ int main() {
 	if ((arquivo_matriz=fopen("matriz_inversa.txt","r"))!=NULL) {
                 for (int i=0;i<4;i++) {
                         for (int j=0;j<4;j++) {
-                                fscanf(arquivo_matriz,"%d",&matriz_ent);
-                                matriz_criptografia_inv[i][j] = matriz_ent;
+                                fscanf(arquivo_matriz,"%d",&matriz_criptografia_inv[i][j]);
                         }
                 }
         }
         fclose(arquivo_matriz);
-	
+	//-------------------------- Aloca memoria e realiza a leitura das matrizes de criptografia 
+
+
+	//-------------------------- Escolher se vai criptografar ou descriptografar
+
 	int opcao = 0;
 
 	while (1) {
@@ -56,22 +60,24 @@ int main() {
 	if (opcao==1) { // Se o usuario quiser criptografar
 
 	//-------------------------- Parte responsavel pela leitura do arquivo
-	FILE* arquivo_entrada; // ponteiro para o arquivo que contem a mensagem que sera criptografada
+	FILE* arquivo_entrada; // mensagem que sera criptografada
 	char c; // caractere de entrada
-	// int tamanho_mensagem = 0; // indice do vetor em que sera armazenado o caractere atual
-	if ((arquivo_entrada=fopen("mensagem.txt","r"))!=NULL) { // tentativa de abrir o arquivo
+	if ((arquivo_entrada=fopen("mensagem.txt","r"))!=NULL) {
 		while((c=fgetc(arquivo_entrada))!=EOF) { // le o arquivo caractere por caractere ate encontrar o final
 			inseri_dado(vetor_texto, c); // armazena o caractere atual no vetor de caracteres
-			// tamanho_mensagem++; // incrementa o indice do proximo caractere que sera armazenado
 		}
 	}
 	fclose(arquivo_entrada); // fecha o arquivo
 	//------------------------- Parte responsavel pela leitura do arquivo
-	
+
+
 	
 	//------------------------ Parte responsavel por obter uma matriz de inteiros a partir da matriz de texto
 
-	int n_linhas = vetor_texto->size/4; // calcula o numero de colunas da matriz resultante da codificacao
+	int n_linhas = vetor_texto->size/4; // calcula o numero de linhas da matriz resultante da codificacao
+	if (vetor_texto->size%4!=0) {
+		n_linhas++;
+	} // adiciona uma linha caso o tamanho do texto nao seja divisel por 4
 	matriz_entrada = cria_matriz(n_linhas); // inicializa a matriz de entrada;
 	matriz_saida = cria_matriz(n_linhas); // inicializa a matriz que receberá a mensagem criptografada.
 	pthread_t t_codificacao[4]; // threads responsaveis pela codificacao
@@ -155,19 +161,26 @@ int main() {
 	else if (opcao==2) { //Se o usuario quiser descriptografar
 		//-------------------------- Parte responsavel pela leitura do arquivo
 		FILE* arquivo_entrada; // ponteiro para o arquivo que contem a mensagem criptografada
-		int entrada; //inteiro que armazena o valor lido na entrada
 		int n_linhas = 0; // linha da matriz em que sera armazenada o inteiro atual
-		int coluna = 0; // coluna da matriz em que sera armazenado o inteiro atual
+		int entrada;
 		if ((arquivo_entrada=fopen("codigo.txt","r"))!=NULL) {
 			while((fscanf(arquivo_entrada,"%d",&entrada))!=EOF) {
-				matriz_entrada[n_linhas][coluna] = entrada;
-				coluna++;
-				if (coluna == 4) {
-					coluna = 0;
-					n_linhas++;
+				n_linhas++;
+			}
+		}
+		fclose(arquivo_entrada);
+		n_linhas/= 4;
+		matriz_entrada = cria_matriz(n_linhas); // inicializa a matriz de entrada;
+		matriz_saida = cria_matriz(n_linhas); // inicializa a matriz que receberá a mensagem criptografada.		
+		
+		if ((arquivo_entrada=fopen("codigo.txt","r"))!=NULL) {
+			for(int i = 0; i < n_linhas; i++) {
+				for(int j = 0; j < 4; j++){
+					fscanf(arquivo_entrada,"%d ", &matriz_entrada[i][j]);
 				}
 			}
 		}
+		fclose(arquivo_entrada);
 		//-------------------------- Parte responsavel pela leitura do arquivo
 
 
@@ -177,7 +190,7 @@ int main() {
 	        for (int i=0;i<4;i++) { // atribui valores para os parametros de cada threads
         	        parametros_multiplicacao[i].criptografia = matriz_criptografia_inv;
                		parametros_multiplicacao[i].matriz_texto = matriz_entrada;
-                	parametros_multiplicacao[i].num_linhas = n_linhas-1;
+                	parametros_multiplicacao[i].num_linhas = n_linhas;
                 	parametros_multiplicacao[i].coluna = i;
                 	parametros_multiplicacao[i].matriz_codigo = matriz_saida;
         	}
@@ -200,26 +213,23 @@ int main() {
 			}
         	}
 		//------------------------Parte responsavel por realizar a multiplicacao de matrizes
-		
-
-		// //------------------------ Parte responsavel por obter uma vetor de caracteres a partir da matriz de inteiros
-		// pthread_t t_codificacao[4]; // threads responsaveis por transformar a matriz codigo em um vetor de caracteres
 
 
 		//------------------------Parte responsavel por salvar a saida em um documento de texto
 		FILE* arquivo_saida; // ponteiro para o arquivo que armazena o texto descriptografado
         	if ((arquivo_saida=fopen("texto.txt","w"))!=NULL) {
                 	for (int i = 0; i < n_linhas; i++)
-                        for (int j = 0; j < 4; j++)
-							if (matriz_saida[i][j] != -1)
-								fprintf(arquivo_saida,"%c", (char) matriz_saida[i][j]);
+                        	for (int j = 0; j < 4; j++)
+					if (matriz_saida[i][j] != 0)
+						fprintf(arquivo_saida,"%c", (char) matriz_saida[i][j]);
 
         	}
         	fclose(arquivo_saida);
         //-----------------------Parte responsavel por salvar a saida em um documento de texto
 
 	}// fim da parte responsavel por descriptografar
-	destroi_matriz(matriz_criptografia,4);
-	destroi_matriz(matriz_criptografia_inv,4);
+
+	destroi_matriz(matriz_criptografia,4); // libera a memoria alocada para a matriz original
+	destroi_matriz(matriz_criptografia_inv,4); // libera a memoria alocada para a matriz inversa
 	return 0;
 } // Fim do codigo
