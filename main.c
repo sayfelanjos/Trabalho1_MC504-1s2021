@@ -106,6 +106,27 @@ int main() {
 			return 1;
 		}
 	}
+	printf("Matriz codigo:\n");
+	for (int i=0;i<n_linhas;i++) {
+		for (int j=0;j<4;j++) {
+			printf("%d ", matriz_entrada[i][j]);
+		}
+		printf("\n");
+	}
+	printf("Matriz criptografia:\n");
+	for (int i=0;i<4;i++) {
+                for (int j=0;j<4;j++) {
+                        printf("%d ", matriz_criptografia[i][j]);
+                }
+                printf("\n");
+        }
+	printf("Matriz inversa:\n");
+	for (int i=0;i<4;i++) {
+                for (int j=0;j<4;j++) {
+                        printf("%d ", matriz_criptografia_inv[i][j]);
+                }
+                printf("\n");
+        }
 	//------------------------Parte responsavel por obter uma matriz de inteiros a partir da matriz de texto
 	
 	
@@ -211,6 +232,14 @@ int main() {
         	}
 		//------------------------Parte responsavel por realizar a multiplicacao de matrizes
 		
+
+		printf("Matriz codigo:\n");
+		for (int i=0;i<n_linhas;i++) {
+			for (int j=0;j<4;j++) {
+				printf("%d ", matriz_saida[i][j]);
+			}
+			printf("\n");
+		}
 
 		// //------------------------ Parte responsavel por obter uma vetor de caracteres a partir da matriz de inteiros
 		// pthread_t t_codificacao[4]; // threads responsaveis por transformar a matriz codigo em um vetor de caracteres
