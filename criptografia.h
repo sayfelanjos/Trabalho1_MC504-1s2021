@@ -85,6 +85,12 @@ p_vetor inseri_dado(p_vetor vetor, char dado);
  */
 void destroi_vetor(p_vetor vetor);
 
+/**
+ * codifica o texto em números inteiros
+ */
 void* transforma_texto(void* texto);
 
+/**
+ * descodifica de inteiros para texto
+ */
 void* transforma_codigo(void* codigo);
